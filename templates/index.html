@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Home | Signal / Security Lab{% endblock %}
+{% block content %}
+<section class="intro">
+  <p class="eyebrow">LOCAL MACHINE LEARNING DEMO</p>
+  <h1>Explore suspicious signals.<br><span>Keep the judgment yours.</span></h1>
+  <p class="lede">A student project for experimenting with spam classification and safe, static file analysis.</p>
+</section>
+<section class="module-grid" aria-label="Detection modules">
+  <a class="module" href="{{ url_for('spam') }}">
+    <span class="module-index">01 / TEXT</span>
+    <h2>Spam detection</h2>
+    <p>Submit an SMS or message for an experimental text classification.</p>
+    <span class="module-action">Open module <span aria-hidden="true">→</span></span>
+  </a>
+  <a class="module" href="{{ url_for('malware') }}">
+    <span class="module-index">02 / FILE</span>
+    <h2>Malware detection</h2>
+    <p>Inspect a file through static features. Uploaded files are never run.</p>
+    <span class="module-action">Open module <span aria-hidden="true">→</span></span>
+  </a>
+</section>
+<p class="status-note"><span class="status-dot"></span>{{ "Malware model loaded. The spam pipeline is still under development." if malware_model_ready else "Application is running. Train the malware model before analyzing files." }}</p>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Evaluation | Signal / Security Lab{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">MODEL PERFORMANCE</p>
+  <h1>Evaluation</h1>
+  <p>Metrics are measured on held-out EMBER data. They describe this experimental model, not general malware detection performance.</p>
+</section>
+<section class="evaluation-list" aria-label="Evaluation artifact status">
+  <div><span>Spam model metrics</span><strong>{{ "Available" if spam_metrics else "Not generated" }}</strong></div>
+  {% if malware_metrics %}
+  <div><span>Malware model dataset</span><strong>{{ malware_metrics.dataset }}</strong></div>
+  <div><span>Test samples</span><strong>{{ malware_metrics.test_samples }}</strong></div>
+  <div><span>Accuracy</span><strong>{{ "%.1f" | format(malware_metrics.accuracy * 100) }}%</strong></div>
+  <div><span>Precision</span><strong>{{ "%.1f" | format(malware_metrics.precision * 100) }}%</strong></div>
+  <div><span>Recall</span><strong>{{ "%.1f" | format(malware_metrics.recall * 100) }}%</strong></div>
+  <div><span>F1 score</span><strong>{{ "%.1f" | format(malware_metrics.f1 * 100) }}%</strong></div>
+  <div class="matrix-row"><span>Confusion matrix</span><img class="confusion-matrix" src="{{ url_for('static', filename='malware_confusion_matrix.png') }}" alt="Confusion matrix showing benign and malware test results"></div>
+  {% else %}
+  <div><span>Malware model metrics</span><strong>Not generated</strong></div>
+  {% endif %}
+</section>
+{% endblock %}

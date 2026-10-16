@@ -1,0 +1,87 @@
+:root {
+  color-scheme: dark;
+  --ink: #edf2f7;
+  --muted: #aab7c7;
+  --line: #344458;
+  --surface: #172538;
+  --base: #101b2d;
+  --mint: #a6efca;
+  --amber: #f4c778;
+  --red: #ff9b9b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 82% 6%, #28364a 0, transparent 34%), var(--base);
+  color: var(--ink);
+  font: 16px/1.55 "Segoe UI", Tahoma, sans-serif;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.topbar {
+  min-height: 72px;
+  padding: 0 6vw;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 700; }
+.brand-mark { display: grid; place-items: center; width: 30px; aspect-ratio: 1; border: 1px solid var(--mint); color: var(--mint); }
+nav { display: flex; flex-wrap: wrap; gap: 24px; color: var(--muted); font-size: 14px; }
+nav a:hover, nav a:focus-visible { color: var(--mint); }
+
+main { width: min(100% - 40px, 1060px); margin: 0 auto; min-height: calc(100vh - 130px); padding: 68px 0 80px; }
+.intro { max-width: 800px; padding-bottom: 48px; }
+.eyebrow, .module-index { color: var(--mint); font: 700 12px/1.4 Consolas, monospace; letter-spacing: 1px; }
+h1 { margin: 15px 0 14px; font-size: clamp(34px, 6vw, 60px); line-height: 1.08; }
+h1 span { color: var(--mint); }
+.lede, .page-heading > p:last-child { max-width: 640px; color: var(--muted); font-size: 18px; }
+.module-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.module { min-height: 230px; padding: 28px 30px 24px 0; display: flex; flex-direction: column; align-items: flex-start; }
+.module + .module { padding-left: 30px; border-left: 1px solid var(--line); }
+.module h2 { margin: 20px 0 6px; font-size: 25px; }
+.module p { max-width: 380px; margin: 0 0 22px; color: var(--muted); }
+.module-action { margin-top: auto; color: var(--mint); }
+.module:hover .module-action span { display: inline-block; transform: translateX(4px); }
+.status-note { margin-top: 24px; color: var(--muted); font-size: 14px; }
+.status-dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--amber); }
+.page-heading { margin-bottom: 34px; }
+.page-heading h1 { font-size: 42px; }
+.form-panel { padding: 26px; border: 1px solid var(--line); background: rgb(23 37 56 / 80%); }
+label { display: block; margin-bottom: 10px; font-weight: 700; }
+textarea, input[type="file"] { width: 100%; padding: 14px; border: 1px solid #52647a; border-radius: 2px; background: #0e1928; color: var(--ink); font: inherit; }
+textarea { resize: vertical; }
+.field-hint, .form-meta { color: var(--muted); font-size: 14px; }
+.form-meta { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 18px; }
+.button { min-height: 44px; padding: 0 18px; border: 0; background: var(--mint); color: #102119; font: 700 14px inherit; cursor: pointer; }
+.button:hover { background: #c6f8dc; }
+.alerts { margin-bottom: 24px; }
+.alert { margin: 0; padding: 12px 16px; border-left: 3px solid var(--amber); background: var(--surface); }
+.alert-error { border-color: var(--red); }
+.alert-notice { border-color: var(--amber); }
+.evaluation-list { border-top: 1px solid var(--line); }
+.evaluation-list div { padding: 18px 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 18px; }
+.evaluation-list strong { color: var(--amber); font-size: 14px; }
+.result-panel { margin-top: 28px; }
+.result-label { color: var(--mint) !important; }
+.matrix-row { align-items: flex-start; }
+.confusion-matrix { width: min(100%, 340px); height: auto; }
+footer { padding: 20px 6vw; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; text-align: center; }
+
+@media (max-width: 620px) {
+  .topbar { align-items: flex-start; flex-direction: column; padding: 16px 20px; gap: 12px; }
+  nav { gap: 16px; }
+  main { padding-top: 46px; }
+  .module-grid { grid-template-columns: 1fr; }
+  .module { min-height: 200px; padding: 24px 0; }
+  .module + .module { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+  .form-panel { padding: 18px; }
+  .form-meta { align-items: flex-start; flex-direction: column; }
+}

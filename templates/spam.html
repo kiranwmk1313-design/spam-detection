@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Spam Detection | Signal / Security Lab{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">MODULE 01 / TEXT CLASSIFICATION</p>
+  <h1>Spam detection</h1>
+  <p>Test a message with the trained SMS classifier. Predictions are experimental.</p>
+</section>
+<form class="form-panel" method="post">
+  <label for="message">Message text</label>
+  <textarea id="message" name="message" rows="8" maxlength="{{ max_text_length }}" required>{{ message }}</textarea>
+  <div class="form-meta"><span>Up to {{ "{:,.0f}".format(max_text_length) }} characters</span><button class="button" type="submit">Analyze message <span aria-hidden="true">→</span></button></div>
+</form>
+{% endblock %}
