@@ -15,6 +15,15 @@
       <a href="{{ url_for('spam') }}">Spam</a>
       <a href="{{ url_for('malware') }}">Malware</a>
       <a href="{{ url_for('evaluation') }}">Evaluation</a>
+      {% if session.get('authenticated') %}
+      <a href="{{ url_for('configure_login') }}">Configure sign-in</a>
+      <a href="{{ url_for('logout') }}">Sign out</a>
+      {% else %}
+      <a href="{{ url_for('login') }}">Sign in</a>
+      {% if not auth_enabled %}
+      <a href="{{ url_for('configure_login') }}">Configure sign-in</a>
+      {% endif %}
+      {% endif %}
     </nav>
   </header>
   <main>

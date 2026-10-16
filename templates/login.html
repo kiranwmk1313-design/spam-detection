@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Sign In | Signal / Security Lab{% endblock %}
+{% block content %}
+<section class="login-wrap">
+  <div class="page-heading">
+    <p class="eyebrow">SIGNAL / SECURITY LAB</p>
+    <h1>Welcome back.</h1>
+    <p>Sign in to continue to the local detection workspace.</p>
+  </div>
+  {% if auth_enabled %}
+  <form class="form-panel login-form" method="post" action="{{ url_for('login') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" required>
+    <div class="form-meta"><span>Local account</span><button class="button" type="submit">Sign in <span aria-hidden="true">→</span></button></div>
+  </form>
+  {% else %}
+  <p class="alert alert-notice">Sign-in is not configured yet. Create a local account to enable it.</p>
+  <a class="button setup-button" href="{{ url_for('configure_login') }}">Configure sign-in <span aria-hidden="true">→</span></a>
+  {% endif %}
+</section>
+{% endblock %}

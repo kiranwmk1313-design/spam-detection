@@ -54,9 +54,16 @@ h1 span { color: var(--mint); }
 .status-dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--amber); }
 .page-heading { margin-bottom: 34px; }
 .page-heading h1 { font-size: 42px; }
+.login-wrap { width: min(100%, 500px); margin: 20px auto 0; }
+.login-wrap .page-heading { margin-bottom: 26px; }
+.login-form { display: grid; gap: 10px; }
+.login-form label:not(:first-child) { margin-top: 8px; }
+.login-form .form-meta { margin-top: 12px; }
+.login-wrap code { color: var(--mint); }
+.setup-button { display: inline-flex; align-items: center; margin-top: 16px; }
 .form-panel { padding: 26px; border: 1px solid var(--line); background: rgb(23 37 56 / 80%); }
 label { display: block; margin-bottom: 10px; font-weight: 700; }
-textarea, input[type="file"] { width: 100%; padding: 14px; border: 1px solid #52647a; border-radius: 2px; background: #0e1928; color: var(--ink); font: inherit; }
+textarea, input[type="text"], input[type="password"], input[type="file"] { width: 100%; padding: 14px; border: 1px solid #52647a; border-radius: 2px; background: #0e1928; color: var(--ink); font: inherit; }
 textarea { resize: vertical; }
 .field-hint, .form-meta { color: var(--muted); font-size: 14px; }
 .form-meta { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 18px; }

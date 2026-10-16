@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Configure Sign In | Signal / Security Lab{% endblock %}
+{% block content %}
+<section class="login-wrap">
+  <div class="page-heading">
+    <p class="eyebrow">LOCAL ACCOUNT SETUP</p>
+    <h1>{{ "Update sign-in." if auth_already_enabled else "Configure sign-in." }}</h1>
+    <p>Create a local account for this installation. Your password is stored as a one-way hash.</p>
+  </div>
+  <form class="form-panel login-form" method="post" action="{{ url_for('configure_login') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text" minlength="3" maxlength="64" autocomplete="username" required autofocus>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" minlength="12" autocomplete="new-password" required>
+    <label for="password_confirmation">Confirm password</label>
+    <input id="password_confirmation" name="password_confirmation" type="password" minlength="12" autocomplete="new-password" required>
+    <div class="form-meta"><span>Minimum 12 characters</span><button class="button" type="submit">Save sign-in <span aria-hidden="true">→</span></button></div>
+  </form>
+</section>
+{% endblock %}

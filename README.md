@@ -35,4 +35,10 @@ python app.py
 
 Open <http://127.0.0.1:5000>. Restart the app after training so it loads the saved model. The upload route accepts `.exe` and `.dll` PE files, enforces a 10 MB request limit, validates them with `pefile`, and analyzes bytes in memory without saving or executing the file.
 
+## Sign-in
+
+On a fresh installation, open <http://127.0.0.1:5000/configure-login> and create a username and password. Passwords must contain at least 12 characters. The app stores only a Werkzeug password hash and a generated session key in `instance/auth.json`; `instance/` is excluded from Git. After setup, the app routes require sign-in. Use **Configure sign-in** while logged in to update the account, and **Sign out** to end the session.
+
+For deployments managed outside the app, `SPAM_APP_USERNAME`, `SPAM_APP_PASSWORD_HASH`, and `FLASK_SECRET_KEY` environment variables can configure sign-in instead. Do not use the local development server or expose account configuration to an untrusted network.
+
 The malware score is not a calibrated probability. A byte histogram is a limited signal and may miss novel or modified malware. This experimental project must not replace antivirus or professional security analysis. The spam page remains a scaffold until its dataset and training pipeline are implemented.
