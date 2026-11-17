@@ -19,6 +19,7 @@ MAX_UPLOAD_SIZE = 10 * 1024 * 1024
 ALLOWED_EXTENSIONS = {".exe", ".dll", ".pdf", ".docx", ".zip", ".txt", ".js"}
 MALWARE_MODEL_PATH = MODEL_DIR / "malware_model.joblib"
 MALWARE_SCALER_PATH = MODEL_DIR / "malware_scaler.joblib"
+SPAM_MODEL_PATH = MODEL_DIR / "spam_model.joblib"
 
 
 def load_auth_configuration():
@@ -54,7 +55,19 @@ app.config.update(
 
 
 def spam_artifacts_exist():
-    return (MODEL_DIR / "spam_model.keras").is_file() and (MODEL_DIR / "tokenizer.joblib").is_file()
+    return SPAM_MODEL is not None
+
+
+def load_spam_model():
+    if not SPAM_MODEL_PATH.is_file():
+        return None
+    try:
+        saved_model = joblib.load(SPAM_MODEL_PATH)
+        if isinstance(saved_model, dict) and "pipeline" in saved_model:
+            return saved_model
+        return {"pipeline": saved_model, "threshold": 0.5}
+    except (OSError, EOFError, ValueError, AttributeError):
+        return None
 
 
 def load_malware_artifacts():
@@ -75,6 +88,7 @@ def load_metrics(filename):
 
 
 MALWARE_MODEL, MALWARE_SCALER = load_malware_artifacts()
+SPAM_MODEL = load_spam_model()
 
 
 def save_auth_configuration(username, password):
@@ -187,12 +201,17 @@ def logout():
 
 @app.get("/")
 def home():
-    return render_template("index.html", malware_model_ready=MALWARE_MODEL is not None)
+    return render_template(
+        "index.html",
+        malware_model_ready=MALWARE_MODEL is not None,
+        spam_model_ready=SPAM_MODEL is not None,
+    )
 
 
 @app.route("/spam", methods=["GET", "POST"])
 def spam():
     message = ""
+    result = None
     if request.method == "POST":
         message = request.form.get("message", "")
         if not message.strip():
@@ -202,8 +221,18 @@ def spam():
         elif not spam_artifacts_exist():
             flash("The spam model is not trained yet. Run train_spam_model.py after adding the dataset.", "notice")
         else:
-            flash("Spam prediction is not available yet.", "notice")
-    return render_template("spam.html", message=message, max_text_length=MAX_TEXT_LENGTH)
+            model = SPAM_MODEL["pipeline"]
+            probabilities = model.predict_proba([message.strip()])[0]
+            spam_class_index = list(model.classes_).index(1)
+            spam_probability = float(probabilities[spam_class_index])
+            is_spam = spam_probability >= float(SPAM_MODEL.get("threshold", 0.5))
+            result = {
+                "label": "Spam" if is_spam else "Not Spam",
+                "confidence": max(spam_probability, 1 - spam_probability),
+                "spam_probability": spam_probability,
+                "is_spam": is_spam,
+            }
+    return render_template("spam.html", message=message, max_text_length=MAX_TEXT_LENGTH, result=result)
 
 
 @app.route("/malware", methods=["GET", "POST"])

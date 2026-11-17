@@ -20,5 +20,5 @@
     <span class="module-action">Open module <span aria-hidden="true">→</span></span>
   </a>
 </section>
-<p class="status-note"><span class="status-dot"></span>{{ "Malware model loaded. The spam pipeline is still under development." if malware_model_ready else "Application is running. Train the malware model before analyzing files." }}</p>
+<p class="status-note"><span class="status-dot"></span>{% if spam_model_ready and malware_model_ready %}Spam and malware models loaded.{% elif spam_model_ready %}Spam model loaded; malware model unavailable.{% elif malware_model_ready %}Malware model loaded. Train the spam model before analyzing messages.{% else %}Application is running; both models need training.{% endif %}</p>
 {% endblock %}

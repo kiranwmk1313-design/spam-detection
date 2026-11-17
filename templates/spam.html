@@ -7,8 +7,17 @@
   <p>Test a message with the trained SMS classifier. Predictions are experimental.</p>
 </section>
 <form class="form-panel" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
   <label for="message">Message text</label>
   <textarea id="message" name="message" rows="8" maxlength="{{ max_text_length }}" required>{{ message }}</textarea>
   <div class="form-meta"><span>Up to {{ "{:,.0f}".format(max_text_length) }} characters</span><button class="button" type="submit">Analyze message <span aria-hidden="true">→</span></button></div>
 </form>
+{% if result %}
+<section class="evaluation-list result-panel" aria-live="polite">
+  <div><span>Result</span><strong class="{{ 'result-danger' if result.is_spam else 'result-label' }}">{{ result.label }}</strong></div>
+  <div><span>Model confidence</span><strong>{{ "%.1f" | format(result.confidence * 100) }}%</strong></div>
+  <div><span>Spam score</span><strong>{{ "%.1f" | format(result.spam_probability * 100) }}%</strong></div>
+  <p class="field-hint">This experimental model was trained on SMS messages. Its score is not a guarantee that a message is safe or spam.</p>
+</section>
+{% endif %}
 {% endblock %}

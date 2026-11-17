@@ -1,0 +1,37 @@
+{
+  "dataset": "UCI SMS Spam Collection",
+  "dataset_url": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+  "dataset_sha256": "1587ea43e58e82b14ff1f5425c88e17f8496bfcdb67a583dbff9eefaf9963ce3",
+  "dataset_samples": 5572,
+  "train_samples": 4457,
+  "test_samples": 1115,
+  "test_class_counts": {
+    "ham": 966,
+    "spam": 149
+  },
+  "model": "Word/character TF-IDF + class-balanced LogisticRegression",
+  "threshold": 0.4799999999999999,
+  "threshold_selection": "Best validation F1 with validation precision >= 0.90; validation-only fallback if unavailable",
+  "validation_samples": 892,
+  "validation_precision": 0.9747899159663865,
+  "validation_recall": 0.9666666666666667,
+  "validation_f1": 0.9707112970711297,
+  "accuracy": 0.9910313901345291,
+  "precision": 0.986013986013986,
+  "recall": 0.9463087248322147,
+  "f1": 0.9657534246575342,
+  "confusion_matrix": [
+    [
+      964,
+      2
+    ],
+    [
+      8,
+      141
+    ]
+  ],
+  "confusion_matrix_labels": [
+    "Ham",
+    "Spam"
+  ]
+}

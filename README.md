@@ -27,6 +27,14 @@ The dataset contains extracted feature vectors, not executable files. Training u
 
 Dataset source: [EMBER 2018 v2 mirror](https://huggingface.co/datasets/cw1521/ember2018-malware-v2), pinned to revision `8472b3de1c2029bf9376465e834a679d50933136`. Original project: [Elastic/EMBER](https://github.com/elastic/ember). Labels `-1` (benign) and `1` (malware) are used; unclassified rows are excluded.
 
+## Train the spam model
+
+```powershell
+python train_spam_model.py
+```
+
+The script downloads the CC BY 4.0 UCI SMS Spam Collection, creates a stratified train/validation/test split, and trains a class-balanced logistic-regression model with word and character TF-IDF features. It selects a decision threshold using the validation set while targeting at least 90% validation precision, then reports final results on untouched test data. It saves `models/spam_model.joblib`, held-out metrics, and a confusion-matrix image. The dataset archive is kept under ignored `datasets/` and is not committed. Dataset citation: Almeida and Hidalgo (2011), [UCI SMS Spam Collection](https://archive.ics.uci.edu/dataset/228/sms+spam+collection).
+
 ## Run the app
 
 ```powershell
@@ -41,4 +49,4 @@ On a fresh installation, open <http://127.0.0.1:5000/configure-login> and create
 
 For deployments managed outside the app, `SPAM_APP_USERNAME`, `SPAM_APP_PASSWORD_HASH`, and `FLASK_SECRET_KEY` environment variables can configure sign-in instead. Do not use the local development server or expose account configuration to an untrusted network.
 
-The malware score is not a calibrated probability. A byte histogram is a limited signal and may miss novel or modified malware. This experimental project must not replace antivirus or professional security analysis. The spam page remains a scaffold until its dataset and training pipeline are implemented.
+Both models are experimental. Spam performance is based on a small SMS corpus and may not generalize to email or new spam styles. The malware score is not a calibrated probability; a byte histogram is a limited signal and may miss novel or modified malware. This project must not replace antivirus or professional security analysis.
